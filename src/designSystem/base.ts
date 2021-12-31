@@ -5,6 +5,10 @@ export const Base = createGlobalStyle`
   body {
     background: ${(props) => props.theme.colors.neutralWhite};
     font: 400 100%/1.2 ${(props) => props.theme.fonts.primary};
+    padding-top: ${rem(128)};
+
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 `;
 
