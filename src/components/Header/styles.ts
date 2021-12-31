@@ -4,7 +4,7 @@ import { rem } from '../../designSystem/tools';
 export const Tag = styled.header`
   background-color: white;
   left: 0;
-  position: absolute;
+  position: fixed;
   top: 0;
   width: 100%;
   z-index: 30;

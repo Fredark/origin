@@ -1,10 +1,10 @@
+import AmountInput from './AmountInput';
 import {
   Tag,
   MoneyEnv,
   Label,
   Box,
   Money,
-  Amount,
   MonthEnv,
   Item,
   Month,
@@ -34,7 +34,7 @@ const MoneyInput: React.VFC = () => (
       <Money>
         <use xlinkHref="#money" />
       </Money>
-      <Amount name="amount" id="amount" />
+      <AmountInput name="amount" id="amount" />
     </Box>
   </MoneyEnv>
 );
