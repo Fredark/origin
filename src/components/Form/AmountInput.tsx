@@ -16,7 +16,14 @@ const AmountInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
     );
   };
 
-  return <Amount {...props} onChange={handleChange} value={amount} />;
+  return (
+    <Amount
+      {...props}
+      onChange={handleChange}
+      value={amount}
+      placeholder="25,000"
+    />
+  );
 };
 
 export default AmountInput;
