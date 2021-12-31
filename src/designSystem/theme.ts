@@ -11,6 +11,7 @@ export const theme: DefaultTheme = {
     blueGray600: '#4D6475',
     blueGray900: '#1E2A32',
     brandColorPrimary: '#1B31A8',
+    brandColorSecondary: '#0079FF',
     neutralWhite: '#F4F8FA',
   },
   fonts: {

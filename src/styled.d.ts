@@ -11,6 +11,7 @@ declare module 'styled-components' {
       blueGray600: string;
       blueGray900: string;
       brandColorPrimary: string;
+      brandColorSecondary: string;
       neutralWhite: string;
     },
     fonts: {
