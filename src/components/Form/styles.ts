@@ -1,17 +1,15 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { rem } from '../../designSystem/tools';
+
+interface FormElement {
+  readonly isActive: boolean;
+}
 
 export const Tag = styled.form`
   display: flex;
   flex-wrap: wrap;
   margin: 0 ${rem(-8)};
   width: calc(100% + ${rem(16)});
-`;
-
-export const MoneyEnv = styled.div`
-  display: block;
-  flex: 1 1 ${rem(272)};
-  margin: 0 ${rem(8)} ${rem(24)};
 `;
 
 export const Label = styled.label`
@@ -28,14 +26,17 @@ export const Box = styled.label`
   border: ${rem(1)} solid ${(props) => props.theme.colors.blueGray50};
   border-radius: ${rem(4)};
   display: flex;
-  width: 100%;
   padding: ${rem(12)};
+  transition: all 150ms ease-in-out;
+  width: 100%;
 `;
 
 export const Money = styled.svg`
+  fill: ${(props) => props.theme.colors.blueGray100};
   flex: 0 0 auto;
   height: ${rem(24)};
   margin-right: ${rem(8)};
+  transition: all 150ms ease-in-out;
   width: ${rem(24)};
 `;
 
@@ -47,21 +48,79 @@ export const Amount = styled.input`
   font: 500 ${rem(24)} / ${rem(26.8)} ${(props) => props.theme.fonts.secondary};
   padding: ${rem(2)} 0 0;
   outline: none;
+  transition: all 150ms ease-in-out;
   width: 100%;
 `;
 
-export const MonthEnv = styled.div`
+export const MoneyEnv = styled.div<FormElement>`
+  display: block;
+  flex: 1 1 ${rem(272)};
+  margin: 0 ${rem(8)} ${rem(24)};
+  outline: none;
+
+  &:hover {
+    ${Box} {
+      border-color: ${(props) => props.theme.colors.blueGray300};
+    }
+
+    ${Money} {
+      fill: ${(props) => props.theme.colors.blueGray300};
+    }
+  }
+
+  ${(props) =>
+    props.isActive &&
+    css`
+      &,
+      &:hover {
+        ${Box} {
+          border-color: ${(props) => props.theme.colors.brandColorSecondary};
+        }
+
+        ${Money} {
+          fill: ${(props) => props.theme.colors.brandColorSecondary};
+        }
+
+        ${Amount} {
+          color: ${(props) => props.theme.colors.blueGray900};
+        }
+      }
+    `}
+`;
+
+export const MonthEnv = styled.div<FormElement>`
   flex: 1 1 ${rem(192)};
   margin: 0 ${rem(8)} ${rem(24)};
+  outline: none;
+  user-select: none;
+
+  &:hover {
+    ${Box} {
+      border-color: ${(props) => props.theme.colors.blueGray300};
+    }
+  }
 
   ${Box} {
     padding: ${rem(4)};
   }
+
+  ${(props) =>
+    props.isActive &&
+    css`
+      &,
+      &:hover {
+        ${Box} {
+          border-color: ${(props) => props.theme.colors.brandColorSecondary};
+        }
+      }
+    `}
 `;
 
 export const Item = styled.div`
   display: block;
   flex: 0 0 100%;
+  outline: none;
+  position: relative;
 `;
 
 export const Month = styled.span`
@@ -139,4 +198,55 @@ export const Button = styled.button`
   padding: ${rem(18)};
   text-align: center;
   width: 100%;
+`;
+
+export const Icon = styled.svg`
+  fill: ${(props) => props.theme.colors.blueGray300};
+  height: ${rem(14)};
+  transition: all 150ms ease-in-out;
+  width: ${rem(8)};
+`;
+
+export const HiddenDate = styled.input`
+  display: none;
+`;
+
+export const LeftArrow = styled.span<FormElement>`
+  align-items: center;
+  cursor: pointer;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  left: 0;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: ${rem(46)};
+
+  &:hover ${Icon} {
+    fill: ${(props) => props.theme.colors.brandColorSecondary};
+  }
+
+  ${(props) =>
+    props.isActive === false &&
+    css`
+      cursor: default;
+
+      ${Icon} {
+        fill: ${(props) => props.theme.colors.blueGray100};
+      }
+
+      &:hover ${Icon} {
+        fill: ${(props) => props.theme.colors.blueGray100};
+      }
+    `}
+`;
+
+export const RightArrow = styled(LeftArrow)<FormElement>`
+  left: auto;
+  right: 0;
+
+  ${Icon} {
+    transform: scaleX(-1);
+  }
 `;

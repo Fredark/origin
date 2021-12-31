@@ -1,4 +1,7 @@
+import { useCallback } from 'react';
+import { useState } from 'react';
 import AmountInput from './AmountInput';
+import DateInput from './DateInput';
 import {
   Tag,
   MoneyEnv,
@@ -6,9 +9,6 @@ import {
   Box,
   Money,
   MonthEnv,
-  Item,
-  Month,
-  Year,
   TotalEnv,
   TotalLine,
   TotalLabel,
@@ -27,29 +27,50 @@ const Form: React.VFC = () => (
   </Tag>
 );
 
-const MoneyInput: React.VFC = () => (
-  <MoneyEnv>
-    <Label htmlFor="amount">Total amount</Label>
-    <Box htmlFor="amount">
-      <Money>
-        <use xlinkHref="#money" />
-      </Money>
-      <AmountInput name="amount" id="amount" />
-    </Box>
-  </MoneyEnv>
-);
+const MoneyInput: React.VFC = () => {
+  const [moneyActive, setMoneyActive] = useState<boolean>(false);
 
-const MonthInput: React.VFC = () => (
-  <MonthEnv>
-    <Label>Reach goal by</Label>
-    <Box>
-      <Item>
-        <Month>October</Month>
-        <Year>2021</Year>
-      </Item>
-    </Box>
-  </MonthEnv>
-);
+  const handleFocus = useCallback(() => {
+    setMoneyActive(true);
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    setMoneyActive(false);
+  }, []);
+
+  return (
+    <MoneyEnv isActive={moneyActive} onFocus={handleFocus} onBlur={handleBlur}>
+      <Label htmlFor="amount">Total amount</Label>
+      <Box htmlFor="amount">
+        <Money>
+          <use xlinkHref="#money" />
+        </Money>
+        <AmountInput name="amount" id="amount" />
+      </Box>
+    </MoneyEnv>
+  );
+};
+
+const MonthInput: React.VFC = () => {
+  const [monthActive, setMonthActive] = useState<boolean>(false);
+
+  const handleFocus = useCallback(() => {
+    setMonthActive(true);
+  }, []);
+
+  const handleBlur = useCallback(() => {
+    setMonthActive(false);
+  }, []);
+
+  return (
+    <MonthEnv isActive={monthActive}>
+      <Label>Reach goal by</Label>
+      <Box>
+        <DateInput onFocus={handleFocus} onBlur={handleBlur} />
+      </Box>
+    </MonthEnv>
+  );
+};
 
 const Total: React.VFC = () => (
   <TotalEnv>
