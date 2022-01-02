@@ -51,7 +51,7 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
   const handleDownArrow = useCallback(() => {
     if (
       dateObj.getFullYear() <= nextMonth.getFullYear() + 1 &&
-      dateObj.getMonth() <= nextMonth.getMonth() + 1
+      dateObj.getMonth() <= nextMonth.getMonth()
     )
       setLeftArrowActive(false);
 
