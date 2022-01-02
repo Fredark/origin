@@ -53,8 +53,8 @@ export const Amount = styled.input`
 
   &::placeholder {
     color: ${(props) => props.theme.colors.blueGray100};
-    font: 500 ${rem(24)} / ${rem(26.8)}
-      ${(props) => props.theme.fonts.secondary};
+    font: 500 ${rem(24)} / ${rem(26.8)};
+    ${(props) => props.theme.fonts.secondary};
   }
 `;
 

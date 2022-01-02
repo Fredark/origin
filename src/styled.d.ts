@@ -13,13 +13,13 @@ declare module 'styled-components' {
       brandColorPrimary: string;
       brandColorSecondary: string;
       neutralWhite: string;
-    },
+    };
     fonts: {
       primary: string;
       secondary: string;
-    },
+    };
     shadows: {
       level4: string;
-    }
+    };
   }
 }
