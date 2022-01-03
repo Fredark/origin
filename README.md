@@ -5,6 +5,8 @@ Frontend take-home assessment for the Engineering Manager opportunity at **Origi
 ### Assets
 [Layout mockups](https://www.figma.com/file/Axdg0WSJURcxp8Arq3gg9x/Take-Home-Assignment-v2)
 
+### [Preview link](https://origin-snowy.vercel.app)
+
 #### Money input
 
 The Money input:
