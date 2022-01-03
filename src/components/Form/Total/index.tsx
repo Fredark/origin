@@ -33,20 +33,21 @@ const Total: React.VFC = () => {
     <TotalEnv>
       <TotalLine>
         <TotalLabel>Monthly Amount</TotalLabel>
-        <TotalValue>{amount > 0 ? `$${monthlyValue}` : '$ -'}</TotalValue>
+        <TotalValue data-testid="monthly-amount">
+          {amount > 0 ? `$${monthlyValue}` : '$ -'}
+        </TotalValue>
       </TotalLine>
       <Bottom>
         You’re planning
-        <Highlight>
+        <Highlight data-testid="monthly-deposits">
           {depositsAmount === 1
             ? ` ${depositsAmount} monthly deposit `
             : ` ${depositsAmount} monthly deposits `}
         </Highlight>
         to reach your
-        <Highlight> ${goal}</Highlight> goal by
+        <Highlight data-testid="goal"> ${goal}</Highlight> goal by
         <Highlight>
-          {' '}
-          {`${FormatMonth(reachDate)} ${FormatYear(reachDate)}`}
+          {` ${FormatMonth(reachDate)} ${FormatYear(reachDate)}`}
         </Highlight>
         .
       </Bottom>
@@ -54,14 +55,14 @@ const Total: React.VFC = () => {
   );
 };
 
-function FormatBigNumbers(value: number): string {
+export function FormatBigNumbers(value: number): string {
   if (value < 100000) return value.toFixed(2).toString();
   if (value < 1000000) return `${(value / 1000).toFixed(2).toString()}K`;
   if (value < 1000000000) return `${(value / 1000000).toFixed(2).toString()}M`;
   return `${(value / 1000000000).toFixed(2).toString()}B`;
 }
 
-function FormatCurrency(value: number): string {
+export function FormatCurrency(value: number): string {
   const fixedTotal = FormatBigNumbers(value);
 
   return fixedTotal

@@ -9,15 +9,7 @@ const AmountInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
   const [amount, setAmount] = useState<string>('');
   const handleChange = useCallback(
     ({ currentTarget }: React.FormEvent<HTMLInputElement>) => {
-      setAmount(
-        currentTarget.value
-          .replace(/[^0-9.]/g, '')
-          .replace(/^[.]/, '0.')
-          .replace(/^[0](\d)+/, '$1')
-          .replace(/\B(?=(\d{3})+(?!\d))/g, '$&,')
-          .replace(/(\.\d{2}).*$/, '$1')
-          .replace(/(\.)(\d)*\./, '$1$2')
-      );
+      setAmount(FormatMoneyInput(currentTarget.value));
     },
     []
   );
@@ -35,8 +27,19 @@ const AmountInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
       placeholder="25,000"
       inputMode="numeric"
       pattern="[0-9.]"
+      data-testid="amount"
     />
   );
 };
+
+export function FormatMoneyInput(value: string): string {
+  return value
+    .replace(/[^0-9.]/g, '')
+    .replace(/^[.]+/, '0.')
+    .replace(/^[0](\d)+/, '$1')
+    .replace(/\B(?=(\d{3})+(?!\d))/g, '$&,')
+    .replace(/(\.\d{2}).*$/, '$1')
+    .replace(/(\.)(\d)*[.]+/g, '$1$2');
+}
 
 export default AmountInput;

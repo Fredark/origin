@@ -44,7 +44,7 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
     if (dateObj.getFullYear() <= nextMonth.getFullYear()) return false;
     if (
       dateObj.getFullYear() <= nextMonth.getFullYear() + 1 &&
-      dateObj.getMonth() <= nextMonth.getMonth()
+      dateObj.getMonth() < nextMonth.getMonth()
     )
       return false;
 
@@ -79,7 +79,12 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
   }, [dateObj, setReachDate]);
 
   return (
-    <Item {...props} tabIndex={1} onKeyDown={handleItemKeyUp}>
+    <Item
+      {...props}
+      tabIndex={1}
+      onKeyDown={handleItemKeyUp}
+      data-testid="date-selector"
+    >
       <HiddenDate
         type="text"
         value={date}
@@ -87,15 +92,24 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
         name="reachDate"
         id="reachDate"
         readOnly
+        data-testid="reach-date"
       />
       <Month>{month}</Month>
       <Year>{year}</Year>
-      <LeftArrow onClick={handleLeftArrow} isActive={leftArrowActive}>
+      <LeftArrow
+        onClick={handleLeftArrow}
+        isActive={leftArrowActive}
+        data-testid="date-left-arrow"
+      >
         <Icon>
           <use xlinkHref="#arrow" />
         </Icon>
       </LeftArrow>
-      <RightArrow onClick={handleRightArrow} isActive={true}>
+      <RightArrow
+        onClick={handleRightArrow}
+        isActive={true}
+        data-testid="date-right-arrow"
+      >
         <Icon>
           <use xlinkHref="#arrow" />
         </Icon>
@@ -109,7 +123,7 @@ export function GetNextMonth(): Date {
   return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
 }
 
-function FormatDate(date: Date): string {
+export function FormatDate(date: Date): string {
   return date.toISOString().split('T')[0];
 }
 
@@ -144,7 +158,7 @@ function canNavigateMonthBack(date: Date, nextMonth: Date): boolean {
   );
 }
 
-function isLeftArrowInactive(date: Date, nextMonth: Date): boolean {
+export function isLeftArrowInactive(date: Date, nextMonth: Date): boolean {
   return (
     date.getMonth() <= nextMonth.getMonth() &&
     date.getFullYear() <= nextMonth.getFullYear()
