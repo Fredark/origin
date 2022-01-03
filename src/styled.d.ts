@@ -19,7 +19,12 @@ declare module 'styled-components' {
       secondary: string;
     };
     shadows: {
+      level1: string;
       level4: string;
+    };
+    medias: {
+      sm: string;
+      md: string;
     };
   }
 }

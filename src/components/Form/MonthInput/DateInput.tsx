@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useCallback, useEffect } from 'react';
 import { InputHTMLAttributes, useState } from 'react';
+import FormContext from '../FormContext';
 import {
   Item,
   HiddenDate,
@@ -21,19 +22,10 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
   const [month, setMonth] = useState<string>(FormatMonth(dateObj));
   const [year, setYear] = useState<string>(FormatYear(dateObj));
   const [leftArrowActive, setLeftArrowActive] = useState<boolean>(false);
+  const { setReachDate } = useContext(FormContext);
 
   const handleLeftArrow = useCallback(() => {
-    if (
-      dateObj.getMonth() <= nextMonth.getMonth() + 1 &&
-      dateObj.getFullYear() <= nextMonth.getFullYear()
-    )
-      setLeftArrowActive(false);
-
-    if (
-      dateObj.getMonth() <= nextMonth.getMonth() &&
-      dateObj.getFullYear() <= nextMonth.getFullYear()
-    )
-      return false;
+    if (isLeftArrowInactive(dateObj, nextMonth)) return false;
 
     setDateObj(PreviousMonth(dateObj));
   }, [dateObj, nextMonth]);
@@ -49,13 +41,12 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
   }, [dateObj]);
 
   const handleDownArrow = useCallback(() => {
+    if (dateObj.getFullYear() <= nextMonth.getFullYear()) return false;
     if (
       dateObj.getFullYear() <= nextMonth.getFullYear() + 1 &&
       dateObj.getMonth() <= nextMonth.getMonth()
     )
-      setLeftArrowActive(false);
-
-    if (dateObj.getFullYear() <= nextMonth.getFullYear()) return false;
+      return false;
 
     setDateObj(PreviousYear(dateObj));
   }, [dateObj, nextMonth]);
@@ -79,7 +70,13 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
     setDate(FormatDate(dateObj));
     setMonth(FormatMonth(dateObj));
     setYear(FormatYear(dateObj));
-  }, [dateObj]);
+
+    if (!canNavigateMonthBack(dateObj, nextMonth)) setLeftArrowActive(false);
+  }, [dateObj, nextMonth]);
+
+  useEffect(() => {
+    setReachDate(dateObj);
+  }, [dateObj, setReachDate]);
 
   return (
     <Item {...props} tabIndex={1} onKeyDown={handleItemKeyUp}>
@@ -89,9 +86,7 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
         min={nextMonthString}
         name="reachDate"
         id="reachDate"
-        onChange={() => {
-          return 'a';
-        }}
+        readOnly
       />
       <Month>{month}</Month>
       <Year>{year}</Year>
@@ -109,7 +104,7 @@ const DateInput: React.VFC<InputHTMLAttributes<HTMLInputElement>> = ({
   );
 };
 
-function GetNextMonth(): Date {
+export function GetNextMonth(): Date {
   const currentDate = new Date();
   return new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
 }
@@ -118,11 +113,11 @@ function FormatDate(date: Date): string {
   return date.toISOString().split('T')[0];
 }
 
-function FormatMonth(date: Date): string {
+export function FormatMonth(date: Date): string {
   return new Intl.DateTimeFormat('en-US', { month: 'long' }).format(date);
 }
 
-function FormatYear(date: Date): string {
+export function FormatYear(date: Date): string {
   return new Intl.DateTimeFormat('en-US', { year: 'numeric' }).format(date);
 }
 
@@ -140,6 +135,20 @@ function PreviousYear(date: Date): Date {
 
 function NextYear(date: Date): Date {
   return new Date(date.getFullYear() + 1, date.getMonth(), 1);
+}
+
+function canNavigateMonthBack(date: Date, nextMonth: Date): boolean {
+  return (
+    date.getMonth() > nextMonth.getMonth() ||
+    date.getFullYear() > nextMonth.getFullYear()
+  );
+}
+
+function isLeftArrowInactive(date: Date, nextMonth: Date): boolean {
+  return (
+    date.getMonth() <= nextMonth.getMonth() &&
+    date.getFullYear() <= nextMonth.getFullYear()
+  );
 }
 
 export default DateInput;

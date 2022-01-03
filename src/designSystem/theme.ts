@@ -19,6 +19,11 @@ export const theme: DefaultTheme = {
     secondary: '"Rubik", sans-serif;',
   },
   shadows: {
+    level1: `0 0 ${rem(5)} 0 rgba(0, 0, 0, .08)`,
     level4: `0 ${rem(16)} ${rem(32)} rgba(30, 42, 50, 0.08)`,
+  },
+  medias: {
+    sm: rem(576),
+    md: rem(992),
   },
 };

@@ -6,10 +6,14 @@ export const Base = createGlobalStyle`
     background: ${(props) => props.theme.colors.neutralWhite};
     color: ${(props) => props.theme.colors.blueGray900};
     font: 400 100%/1.2 ${(props) => props.theme.fonts.primary};
-    padding-top: ${rem(128)};
+    padding: ${rem(88)} 0 ${rem(63)};
 
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+
+    @media (min-width: ${(props) => props.theme.medias.sm}) {
+      padding: ${rem(128)} 0 ${rem(63)};
+    }
   }
 
   * {
