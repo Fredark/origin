@@ -27,7 +27,7 @@ The Date input:
 
 #### Confirm button
 
-The confirm button
+The confirm button:
 
 - Gets disabled when no amount is provided.
 
